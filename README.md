@@ -4,7 +4,7 @@ CSV convert built with FastAPI.
 This project is made for [Soroban Academy](https://akademiasorobanu.pl/) . The goal is to achieve the following points:
 
 * FastAPI with one page with button to upload CSV file and process it
-* FastAPI endpoint `/get_file` with code to process CSV file
+* FastAPI endpoint `/file` with code to process CSV file
 * rewite rules hardcoded in Python:
   * delete 1st row
   * change coding for UTF-8
@@ -27,4 +27,3 @@ Example CVS output is:
 		9999999999,AkademiaSorobanu,AkademiaSorobanu,AkademiaSorobanu,XXX Blanka,-2,2012年0323,2021年03月28,2021年03月28,ş21-3,454,9,,1,1339,100,0,90,0
 		9999999999,AkademiaSorobanu,AkademiaSorobanu,AkademiaSorobanu,XXX Wiktoria,-2,2012年02月14,2021年03月28,2021年03月28,ş21-3,454,9,,2,1340,100,0,80,0
 ```
-
