@@ -1,9 +1,9 @@
+import csv
+from tempfile import mkstemp
 import fastapi
 import uvicorn
-import csv
 from fastapi import FastAPI, File, UploadFile
 from fastapi.responses import FileResponse
-from tempfile import mkstemp
 
 app: FastAPI = FastAPI()
 
@@ -20,8 +20,7 @@ def create_file(file: UploadFile = File(...), quotes=False):
     data_out = data[1:]
     temp_0 = []
     for line in data_out:
-        l = line.strip().split(",")
-        temp_0.append(l)
+        temp_0.append(line.strip().split(","))
 
     temp_1 = []
     for line in temp_0:
@@ -67,7 +66,7 @@ def index():
     <br/> --->
     <input type="submit" value="Wyślij plik i zmień dane">
     </form>
-    
+
     """
     return fastapi.responses.HTMLResponse(cont)
 
