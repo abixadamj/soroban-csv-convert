@@ -24,15 +24,15 @@ def create_file(file: UploadFile = File(...), quotes=False):
 
     temp_1 = []
     for line in temp_0:
-        l = []
+        new_line = []
         for elem in line:
-            l.append(elem.strip().replace("\\", "").replace("\t", "").replace('"', ""))
+            new_line.append(elem.strip().replace("\\", "").replace("\t", "").replace('"', ""))
         # now we change in dates temp[6,7,8] first '/' to '年' and second '/' to '月'
         for idx in [6, 7, 8]:
-            if "/" in l[idx]:
-                l[idx] = l[idx].replace("/", "年", 1)  # first occurrence
-                l[idx] = l[idx].replace("/", "月", 1)  # second occurrence
-        temp_1.append(l.copy())
+            if "/" in new_line[idx]:
+                new_line[idx] = new_line[idx].replace("/", "年", 1)  # first occurrence
+                new_line[idx] = new_line[idx].replace("/", "月", 1)  # second occurrence
+        temp_1.append(new_line.copy())
 
     fpcsv = mkstemp()[1] + ".csv"
     print(fpcsv)
