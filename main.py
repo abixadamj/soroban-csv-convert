@@ -18,15 +18,14 @@ def create_file(file: UploadFile = File(...), quotes=False):
     data = data_str.split("\n")
     # and cut first line
     data_out = data[1:]
-    temp_0 = []
-    for line in data_out:
-        temp_0.append(line.strip().split(","))
-
+    temp_0 = [line.strip().split(",") for line in data_out]
     temp_1 = []
     for line in temp_0:
-        new_line = []
-        for elem in line:
-            new_line.append(elem.strip().replace("\\", "").replace("\t", "").replace('"', ""))
+        new_line = [
+            elem.strip().replace("\\", "").replace("\t", "").replace('"', "")
+            for elem in line
+        ]
+
         # now we change in dates temp[6,7,8] first '/' to '年' and second '/' to '月'
         for idx in [6, 7, 8]:
             if "/" in new_line[idx]:
@@ -41,14 +40,6 @@ def create_file(file: UploadFile = File(...), quotes=False):
         outwriter.writerows(temp_1)
 
     return FileResponse(fpcsv)
-
-
-    # return {
-    #     "Nazwa pliku": file.filename,
-    #     "Dane wejściowe str": data_str,
-    #     "Dane wejściowe": data,
-    #     "Dane wyjściowe": data_out,
-    # }
 
 
 @app.get('/')
