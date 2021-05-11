@@ -6,7 +6,7 @@ After=network-online.target
 Wants=network-online.target
 
 [Service]
-Type=notify
+Type=simple
 PrivateTmp=false
 WorkingDirectory=/srv/soroban-csv-convert
 ExecStart=/srv/soroban-csv-convert/run.sh

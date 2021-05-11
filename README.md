@@ -27,3 +27,13 @@ Example CVS output is:
 		9999999999,AkademiaSorobanu,AkademiaSorobanu,AkademiaSorobanu,XXX Blanka,-2,2012年0323,2021年03月28,2021年03月28,ş21-3,454,9,,1,1339,100,0,90,0
 		9999999999,AkademiaSorobanu,AkademiaSorobanu,AkademiaSorobanu,XXX Wiktoria,-2,2012年02月14,2021年03月28,2021年03月28,ş21-3,454,9,,2,1340,100,0,80,0
 ```
+
+Steps to install it on server:
+
+```
+python3 -m venv venv
+source venv/bin/activate
+pip install -U pip setuptools
+pip install -r requirements.txt
+deactivate
+```

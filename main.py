@@ -8,17 +8,49 @@ from fastapi.responses import FileResponse
 app: FastAPI = FastAPI()
 
 
+def error(msg):
+    """returning an error message in HTMLResponse"""
+    cont = f"""
+    <h2>ERROR</h2><hr>{msg}<hr>
+    Input codepage: SHIFT_JIS; The good structure is something like this: <br>
+    <pre>
+    "ÝĐÔ","m","Žłş","óąłş","śk","wN","śNú","ęčú","čú","ŞĚ","JĂń","","Ć","óąÔ","iÔ","ćZ","Z","ŠćZ","`[Z"
+    "		9999999999","AkademiaSorobanu","AkademiaSorobanu","AkademiaSorobanu","XXX Blanka","-2","2012/03/23","2021/03/28","2021/03/28","ş21-3","454","9","","1","1339","100","0","90","0"
+    "		9999999999","AkademiaSorobanu","AkademiaSorobanu","AkademiaSorobanu","XXX Wiktoria","-2","2012/02/14","2021/03/28","2021/03/28","ş21-3","454","9","","2","1340","100","0","80","0"
+    </pre>
+    """
+    return fastapi.responses.HTMLResponse(cont)
+
+
 @app.post("/file/")
 def create_file(file: UploadFile = File(...), quotes=False):
     """Func for replace..."""
     name = file.filename
     # input as a bytes, so we need to decode it with japanese codepage
-    data_str = file.file.read().decode("SHIFT_JIS")
+    try:
+        data_str = file.file.read().decode("SHIFT_JIS")
+    except:
+        return error(f"{name} - bad codepage or no file ....")
     # next we split to list
     data = data_str.split("\n")
     # and cut first line
+    if len(data) < 2:
+        return error(f"{name} - too little lines ;-)")
+
     data_out = data[1:]
     temp_0 = [line.strip().split(",") for line in data_out]
+
+    fields = len(temp_0[0])
+    print(f"Ilość pól w {name} / {type(temp_0[0])}: {fields}")
+    print("test linii",temp_0[0])
+    if not temp_0:
+        return error(f"Some strange error with converting to list")
+
+    if fields == 18:
+        pass
+    else:
+        return error(f"Incorrect number of fields: {fields} - should be 18.")
+
     temp_1 = []
     for line in temp_0:
         new_line = [
@@ -35,14 +67,14 @@ def create_file(file: UploadFile = File(...), quotes=False):
 
     fpcsv = mkstemp()[1] + ".csv"
     print(fpcsv)
-    with open(fpcsv, "w", newline='') as csvfile:
-        outwriter = csv.writer(csvfile, delimiter=',')
+    with open(fpcsv, "w", newline="") as csvfile:
+        outwriter = csv.writer(csvfile, delimiter=",")
         outwriter.writerows(temp_1)
 
     return FileResponse(fpcsv)
 
 
-@app.get('/')
+@app.get("/")
 def index():
     """Index homepage to get file."""
     cont = """
