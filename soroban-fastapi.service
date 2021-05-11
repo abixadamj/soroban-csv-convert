@@ -1,0 +1,16 @@
+# umieścić w /lib/systemd/system/
+
+[Unit]
+Description=FastAPI
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=notify
+PrivateTmp=false
+WorkingDirectory=/srv/soroban-csv-convert
+ExecStart=/srv/soroban-csv-convert/run.sh
+KillMode=process
+
+[Install]
+WantedBy=multi-user.target
