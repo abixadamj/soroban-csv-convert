@@ -37,3 +37,5 @@ pip install -U pip setuptools
 pip install -r requirements.txt
 deactivate
 ```
+
+Also file `/lib/systemd/system/soroban-fastapi.service` is available.
